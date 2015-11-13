@@ -4,13 +4,28 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="js/jquery.timers-1.1.2.js"></script>
   <title>打字测试</title>
 </head>
 
 <script>
+function create_counter(initial) {
+    var x = initial || 0;
+    return {
+        inc: function() {
+            x += 1;
+            return x;
+        }
+    }
+}
+
+
 $(function(){
     var num = 0;
     var backNum = 0;
+    var counter = create_counter();
+    var times = 0;
+    
     $('#text').keydown(function (e) {
         var key = e.which;
         if(num > 0) {
@@ -28,6 +43,12 @@ $(function(){
         $("#num").text(num);
         $("#backNum").text(backNum);
     });
+    
+    $('body').everyTime('1s', function(){
+        $("#times").text((counter.inc()).toString() + " 秒");
+        times += 1;
+        $("#speed").text((num * 60 / times).toFixed(0).toString() + " KPM");
+    });
 });
 </script>
 
@@ -38,6 +59,12 @@ $(function(){
 
 <p>退格数：</p>
 <p id="backNum">0</p>
+
+<p>花费时间：</p>
+<p id="times"></p>
+
+<p>打字速度：</p>
+<p id="speed"></p>
 </body>
 
 </html>
