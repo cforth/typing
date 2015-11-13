@@ -11,7 +11,7 @@
 $(function(){
     var num = 0;
     var backNum = 0;
-    $('#text').keyup(function (e) {
+    $('#text').keydown(function (e) {
         var key = e.which;
         if(num > 0) {
             if(key == 8) {
