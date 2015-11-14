@@ -1,3 +1,4 @@
+//创建计数器
 function create_counter(initial) {
     var x = initial || 0;
     return {
@@ -16,6 +17,7 @@ $(function(){
     var times = 0;
     var timerSwitch = false;
     
+    //在读取到键盘按键时触发
     $('#text').keydown(function (e) {
         
         if(timerSwitch == false) {

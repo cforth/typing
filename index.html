@@ -1,22 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
+---
+layout: main
+title: 打字测试
+---
+{% assign lines = site.data.articles.lines %}
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <link rel="stylesheet" type="text/css" href="css/style.css">
-  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-  <script src="js/jquery.timers-1.1.2.js"></script>
-  <script src="js/typing.js"></script>
-  <title>打字测试</title>
-</head>
 
-<body>
-
-<div class="header">
-  <h1>打 字 速 度 测 试</h1>
-</div>
-
-<p id="article">The paradox of our time in history is that we have taller buildings, but shorter tempers; wider freeways, but narrower viewpoints; we spend more, but have less; we buy more but enjoy less.<br/>We have bigger houses and smaller families; more conveniences, but less time; we have more degrees, but less sense; more knowledge, but less judgment; more experts, but more problems; more medicine, but less wellness.<br/>We drink too much, spend too recklessly, laugh too little, drive too fast, get too angry too quickly, stay up too late, get up too tired, read too little, watch TV too much, and pray too seldom.</p>
+<div id="article">{% for line in lines%}{% assign line_arr = {{line | split:''}}%}{% assign line_id = {{forloop.index}}%}{% for k in line_arr %}<span id = "{{line_id}}_{{forloop.index}}">{{k}}</span>{% endfor %}<br/>{% endfor %}</div>
 
 <textarea id="text"></textarea>
 
@@ -38,7 +27,3 @@
         <td id="speed">0 KPM</td>
     </tr>
 </table>
-
-</body>
-
-</html>
