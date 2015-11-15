@@ -6,7 +6,7 @@ title: 打字测试
 {% assign lines_arr = {{lines | split:''}}%}
 
 <!-- 练习文章 -->
-<div id="article">{% for k in lines_arr %}<span id = "{{forloop.index}}">{{k}}</span>{% endfor %}</div>
+<div id="article">{% for k in lines_arr %}<span id = "{{forloop.index}}">{{k}}</span>{% if k == '.' %}<br/>{% endif %}{% endfor %}</div>
 
 <!-- 打字区域 -->
 <textarea id="text"></textarea>
@@ -20,7 +20,11 @@ title: 打字测试
     <tr>
         <td>退格数：</td>
         <td id="backNum">0</td>
-
+    </tr>
+    <tr>
+        <td>错字数：</td>
+        <td id="errorNum">0</td>
+    </tr>
     <tr>
         <td>花费时间：</td>
         <td id="times">0 秒</td>
