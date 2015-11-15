@@ -38,19 +38,15 @@ function update_counter(key_num, c) {
 }
 
 
-//比较两个字符是否相同
-function compare_key(keyboard_key, articles_key) {
-    if(keyboard_key == articles_key) {
-        return true;
-    } else {
-        return false;
-    }
+//返回html的span元素字符串
+function span_id(id) {
+    return "#" + id;
 }
 
 
 $(function(){
     var timerSwitch = false;
-    var key, key_id;
+    var key, id;
     
     //在读取到键盘按键时触发
     $('#text').keydown(function (e) {
@@ -70,24 +66,33 @@ $(function(){
         //更新文章中的index
         articles.index = counter.num - 1;
         
+//        console.log(e.which);
+
         //更新网页中的成绩统计
         $("#num").text(counter.num);
         $("#backNum").text(counter.backNum);
+        
+        //在退格时，把经过的字标记回黑色   
+        if(e.which == 8 && counter.num >= 0) {
+            $(span_id(counter.num + 1)).css("color","black");
+        }
         
     });
     
     //比较当前打字的字符是否与文章中对应字符相同
     $('#text').keypress(function(e) {
         key = String.fromCharCode(e.charCode);
+ //       console.log(e.charCode);
+ 
         //将回车键替换成空格键处理
         if (e.charCode == 13) {
             key = " ";
         }
-        key_id = "#" + counter.num;
-        if(compare_key(key, articles.p_key())) {
-            $(key_id).css("color","blue");
+        id = span_id(counter.num);
+        if(key == articles.p_key()) {
+            $(id).css("color","blue");
         } else {
-            $(key_id).css("color","red");
+            $(id).css("color","red");
             //更新错字数，未完成!!
             counter.errorNum += 1;
             $("#errorNum").text(counter.errorNum);
