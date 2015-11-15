@@ -1,50 +1,45 @@
-//创建计数器
-function create_counter(initial) {
-    var x = initial || 0;
-    return {
-        inc: function() {
-            x += 1;
-            return x;
-        }
+//创建成绩统计对象
+var counter = {
+    num: 0,
+    backNum: 0,
+    times: 0,
+    inc: function() {
+        this.times += 1;
     }
-}
-
+};
 
 $(function(){
-    var num = 0;
-    var backNum = 0;
-    var counter = create_counter();
-    var times = 0;
     var timerSwitch = false;
     
     //在读取到键盘按键时触发
     $('#text').keydown(function (e) {
-        
+       
+       //在键盘按键首次摁下时，启动计时器
         if(timerSwitch == false) {
             $('body').everyTime('1s', function(){
-                $("#times").text((counter.inc()).toString() + " 秒");
-                times += 1;
-                $("#speed").text((num * 60 / times).toFixed(0).toString() + " KPM");
-                
+                counter.inc();
+                $("#times").text((counter.times).toString() + " 秒");               
+                $("#speed").text((counter.num * 60 / counter.times).toFixed(0).toString() + " KPM");                
             });
             timerSwitch = true;
         };
         
+        //根据按键字符更新成绩统计对象中的总字数和退格数
         var key = e.which;
-        if(num > 0) {
+        if(counter.num > 0) {
             if(key == 8) {
-                num -= 1;
-                backNum += 1;
+                counter.num -= 1;
+                counter.backNum += 1;
             } else {
-                num += 1;
+                counter.num += 1;
             }
-        } else if (num == 0) {
+        } else if (counter.num == 0) {
             if(key != 8) {
-                num += 1;
+                counter.num += 1;
             }
         }
-        $("#num").text(num);
-        $("#backNum").text(backNum);
+        $("#num").text(counter.num);
+        $("#backNum").text(counter.backNum);
         
     });
 });

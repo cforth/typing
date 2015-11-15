@@ -4,11 +4,13 @@ title: 打字测试
 ---
 {% assign lines = site.data.articles.lines %}
 
-
+<!-- 练习文章 -->
 <div id="article">{% for line in lines%}{% assign line_arr = {{line | split:''}}%}{% assign line_id = {{forloop.index}}%}{% for k in line_arr %}<span id = "{{line_id}}_{{forloop.index}}">{{k}}</span>{% endfor %}<br/>{% endfor %}</div>
 
+<!-- 打字区域 -->
 <textarea id="text"></textarea>
 
+<!-- 成绩统计 -->
 <table border="0">
     <tr>
         <td>总字数：</td>
