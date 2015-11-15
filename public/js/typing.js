@@ -46,7 +46,8 @@ function span_id(id) {
 
 $(function(){
     var timerSwitch = false;
-    var key, id;
+    var length = articles.lines.length;
+    var key, id, speed;
     
     //在读取到键盘按键时触发
     $('#text').keydown(function (e) {
@@ -55,11 +56,13 @@ $(function(){
         if(timerSwitch == false) {
             $('body').everyTime('1s', function(){
                 counter.times += 1;
+                speed = ((counter.num - counter.errorNum) * 60 / counter.times).toFixed(0).toString()
                 $("#times").text((counter.times).toString() + " 秒");   
-                $("#speed").text(((counter.num - counter.errorNum) * 60 / counter.times).toFixed(0).toString() + " KPM");                
+                $("#speed").text(speed + " KPM");                
             });
             timerSwitch = true;
         }
+
         
         //根据按键字符更新成绩统计对象中的总字数和退格数
         update_counter(e.which, counter);
@@ -82,6 +85,10 @@ $(function(){
             $(span_id(counter.num + 1)).css("color","black");
         }
         
+        //打字结束时弹出成绩提示
+        if(counter.num == length) {
+            alert("打字速度为：" + speed + " KPM");
+        }
     });
     
     //比较当前打字的字符是否与文章中对应字符相同
