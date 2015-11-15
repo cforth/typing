@@ -4,7 +4,7 @@
 
 //创建成绩统计对象
 var counter = {
-    num: 0,                //正确的字符总数
+    num: 0,                //字符总数
     backNum: 0,            //退格数
     errorNum: 0,           //错字数
     times: 0,              //耗费的时间（单位为秒）
@@ -55,8 +55,8 @@ $(function(){
         if(timerSwitch == false) {
             $('body').everyTime('1s', function(){
                 counter.times += 1;
-                $("#times").text((counter.times).toString() + " 秒");               
-                $("#speed").text((counter.num * 60 / counter.times).toFixed(0).toString() + " KPM");                
+                $("#times").text((counter.times).toString() + " 秒");   
+                $("#speed").text(((counter.num - counter.errorNum) * 60 / counter.times).toFixed(0).toString() + " KPM");                
             });
             timerSwitch = true;
         }
@@ -66,14 +66,19 @@ $(function(){
         //更新文章中的index
         articles.index = counter.num - 1;
         
-//        console.log(e.which);
-
         //更新网页中的成绩统计
         $("#num").text(counter.num);
         $("#backNum").text(counter.backNum);
         
-        //在退格时，把经过的字标记回黑色   
+        //在退格时，把经过的字标记回黑色（keydown可以监测到退格）
         if(e.which == 8 && counter.num >= 0) {
+            
+            //在退格时根据颜色转变减少错字数
+            if($(span_id(counter.num + 1)).css("color") == "rgb(255, 0, 0)") {
+                counter.errorNum -= 1;
+                $("#errorNum").text(counter.errorNum); 
+            }
+            
             $(span_id(counter.num + 1)).css("color","black");
         }
         
@@ -82,20 +87,21 @@ $(function(){
     //比较当前打字的字符是否与文章中对应字符相同
     $('#text').keypress(function(e) {
         key = String.fromCharCode(e.charCode);
- //       console.log(e.charCode);
  
         //将回车键替换成空格键处理
         if (e.charCode == 13) {
             key = " ";
         }
+        
+        //根据字符对错标记颜色（keypress无法监测到退格）
         id = span_id(counter.num);
         if(key == articles.p_key()) {
             $(id).css("color","blue");
         } else {
-            $(id).css("color","red");
-            //更新错字数，未完成!!
             counter.errorNum += 1;
-            $("#errorNum").text(counter.errorNum);
+            $(id).css("color","red");
         }
+        
+        $("#errorNum").text(counter.errorNum);
     });
 });
