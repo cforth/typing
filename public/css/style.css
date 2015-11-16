@@ -54,3 +54,16 @@ a:hover {
   color:#FF4500;
   text-decoration:underline;
 }
+
+.red {
+    color:white;
+    background-color:red;
+}
+
+.green {
+    color:green;
+}
+
+.black {
+    color:black;
+}

@@ -78,12 +78,14 @@ $(function(){
         if(e.which == 8 && counter.num >= 0) {
             
             //在退格时根据颜色转变减少错字数
-            if($(span_id(counter.num + 1)).css("color") == "rgb(255, 0, 0)") {
+            if($(span_id(counter.num + 1)).hasClass("red")) {
                 counter.errorNum -= 1;
                 $("#errorNum").text(counter.errorNum); 
             }
             
-            $(span_id(counter.num + 1)).css("color","black");
+            $(span_id(counter.num + 1)).removeClass("green");
+            $(span_id(counter.num + 1)).removeClass("red");
+            $(span_id(counter.num + 1)).addClass("black");
         }
         
         //打字结束时弹出成绩提示
@@ -103,11 +105,13 @@ $(function(){
         
         //根据字符对错标记颜色（keypress无法监测到退格）
         id = span_id(counter.num);
+        $(id).removeClass("black");
+        
         if(key == articles.p_key()) {
-            $(id).css("color","blue");
+            $(id).addClass("green");
         } else {
             counter.errorNum += 1;
-            $(id).css("color","red");
+            $(id).addClass("red");
         }
         
         $("#errorNum").text(counter.errorNum);
