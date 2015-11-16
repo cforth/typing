@@ -23,7 +23,8 @@ var articles = {
 
 //根据key_num更新成绩统计对象c
 function update_counter(key_num, c) {
-    if(c.num > 0 && key_num != 20) {
+    var ignore_num = [20, 16, 17, 9];  //需要忽略的键盘码（Tab，CapsLock， shift， Ctrl）
+    if(c.num > 0 && ignore_num.indexOf(key_num) == -1) {
         if(key_num == 8) {
             c.num -= 1;
             c.backNum += 1;
@@ -31,7 +32,7 @@ function update_counter(key_num, c) {
             c.num += 1;
         }
     } else if (c.num == 0) {
-        if(key_num != 8 && key_num != 20) {
+        if(key_num != 8 && ignore_num.indexOf(key_num) == -1) {
             c.num += 1;
         }
     }
@@ -63,7 +64,7 @@ $(function(){
             timerSwitch = true;
         }
 
-        
+        //console.log(e.which);
         //根据按键字符更新成绩统计对象中的总字数和退格数
         update_counter(e.which, counter);
         //更新文章中的index
