@@ -39,16 +39,10 @@ function update_counter(key_num, c) {
 }
 
 
-//返回html的span元素字符串
-function span_id(id) {
-    return "#" + id;
-}
-
-
 $(function(){
     var timerSwitch = false;
     var length = articles.lines.length;
-    var key, id, speed;
+    var key, speed;
     
     //在读取到键盘按键时触发
     $('#text').keydown(function (e) {
@@ -78,14 +72,13 @@ $(function(){
         if(e.which == 8 && counter.num >= 0) {
             
             //在退格时根据颜色转变减少错字数
-            if($(span_id(counter.num + 1)).hasClass("red")) {
+            if($("span").eq(counter.num).hasClass("red")) {
                 counter.errorNum -= 1;
                 $("#errorNum").text(counter.errorNum); 
             }
             
-            $(span_id(counter.num + 1)).removeClass("green");
-            $(span_id(counter.num + 1)).removeClass("red");
-            $(span_id(counter.num + 1)).addClass("black");
+            $("span").eq(counter.num).removeClass();
+            $("span").eq(counter.num).addClass("black");
         }
         
         //打字结束时弹出成绩提示
@@ -104,14 +97,13 @@ $(function(){
         }
         
         //根据字符对错标记颜色（keypress无法监测到退格）
-        id = span_id(counter.num);
-        $(id).removeClass("black");
+        $("span").eq(counter.num - 1).removeClass("black");
         
         if(key == articles.p_key()) {
-            $(id).addClass("green");
+            $("span").eq(counter.num - 1).addClass("green");
         } else {
             counter.errorNum += 1;
-            $(id).addClass("red");
+            $("span").eq(counter.num - 1).addClass("red");
         }
         
         $("#errorNum").text(counter.errorNum);

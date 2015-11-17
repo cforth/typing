@@ -6,7 +6,7 @@ title: 打字测试(请使用Chrome)
 {% assign lines_arr = {{lines | split:''}}%}
 
 <!-- 练习文章 -->
-<div id="article">{% for k in lines_arr %}<span id = "{{forloop.index}}">{{k}}</span>{% if k == '.' %}<br/>{% endif %}{% endfor %}</div>
+<div id="article">{% for k in lines_arr %}<span>{{k}}</span>{% if k == '.' %}<br/>{% endif %}{% endfor %}</div>
 
 <!-- 打字区域 -->
 <textarea id="text"></textarea>
